@@ -1,0 +1,11 @@
+{
+    "name":"sk1",
+    "version": "0.0.1",
+    "description": "slovak spacy model",
+    "author": "Daniel Hládek",
+    "email": "daniel.hladek@tuke.sk",
+    "lang":"sk",
+    "url":"nlp.kemt.fei.tuke.sk",
+    "license": "custom",
+    "spacy_version": ">=2.2.3"
+}
