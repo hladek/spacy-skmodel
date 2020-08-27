@@ -14,6 +14,6 @@ cat ./sources/skner/wikiann-sk.bio | python ./sources/bio-to-iob.py > build/inpu
 cat ./build/input/skner/wikiann-sk.iob | python ./sources/iob-to-traintest.py ./build/input/skner/wikiann-sk
 # Convert train and test
 mkdir -p build/input/skner-train
-spacy convert -n 15 --converter ner ./build/input/skner/wikiann-sk.train ./build/input/skner
+spacy convert -n 15 --converter ner ./build/input/skner/wikiann-sk.train ./build/input/skner-train
 mkdir -p build/input/skner-test
 spacy convert -n 15 --converter ner ./build/input/skner/wikiann-sk.test ./build/input/skner-test
