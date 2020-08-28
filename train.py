@@ -73,7 +73,12 @@ def main(model=None, output_dir=None,training_data=None, n_iter=100):
         ner = nlp.get_pipe("ner")
 
     nlp3 = spacy.blank("sk")
-    TRAIN_DATA =  read_iob(nlp3,training_data)
+    DATA =  read_iob(nlp3,training_data)
+    random.shuffle(DATA)
+    data_sz = len(DATA)
+    test_sz = int(data_sz / 10)
+    TRAIN_DATA = DATA[:-test_sz]
+    TEST_DATA = DATA[-test_sz:]
     ents = ["LOC","ORG","PER","MISC"]
     for ent in ents:
         ner.add_label(ent)
@@ -120,20 +125,16 @@ def main(model=None, output_dir=None,training_data=None, n_iter=100):
         # test the saved model
         print("Loading from", output_dir)
         nlp2 = spacy.load(output_dir)
-        for text, _ in TRAIN_DATA:
+        scorer = spacy.Scorer()
+        for text, gold in TEST_DATA:
             doc = nlp2(text)
-            print("Entities", [(ent.text, ent.label_) for ent in doc.ents])
-            print("Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in doc])
+            scorer.score(doc,gold)
+        print("Precision: {}".format(scorer.ents_p))
+        print("Recall: {}".format(scorer.ents_r))
+        print("F-measure: {}".format(scorer.ents_f))
+        print(scorer.ents_per_type)
 
 
 if __name__ == "__main__":
     plac.call(main)
-
-    # Expected output:
-    # Entities [('Shaka Khan', 'PERSON')]
-    # Tokens [('Who', '', 2), ('is', '', 2), ('Shaka', 'PERSON', 3),
-    # ('Khan', 'PERSON', 1), ('?', '', 2)]
-    # Entities [('London', 'LOC'), ('Berlin', 'LOC')]
-    # Tokens [('I', '', 2), ('like', '', 2), ('London', 'LOC', 3),
-    # ('and', '', 2), ('Berlin', 'LOC', 3), ('.', '', 2)]
 
