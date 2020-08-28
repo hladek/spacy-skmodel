@@ -20,27 +20,48 @@ from pathlib import Path
 import spacy
 from spacy.util import minibatch, compounding
 
+from spacy.gold import offsets_from_biluo_tags
+from spacy.gold import iob_to_biluo
+from spacy.gold import GoldParse
 
-# training data
-TRAIN_DATA = [
-    ("Who is Shaka Khan?", {"entities": [(7, 17, "PERSON")]}),
-    ("I like London and Berlin.", {"entities": [(7, 13, "LOC"), (18, 24, "LOC")]}),
-]
+def read_iob(nlp, filename):
+    words = []
+    ners = []
+    training_data = []
+    with open(filename) as f:
+        for l in f:
+            line = l.strip()
+            if len(line) > 0:
+                tokens = l.split()
+                word = tokens[0]
+                ner = tokens[-1]
+                words.append(word)
+                ners.append(ner)
+            else:
+                biluo = iob_to_biluo(ners)
+                text = " ".join(words)
+                doc = nlp(text)
+                spans = offsets_from_biluo_tags(doc,biluo) 
+                training_data.append((doc,GoldParse(doc,entities=spans)))
+                del ners[:]
+                del words[:]
+        return training_data
 
 
 @plac.annotations(
     model=("Model name. Defaults to blank 'en' model.", "option", "m", str),
     output_dir=("Optional output directory", "option", "o", Path),
+    training_data=("IOB Training data", "option", "t", Path),
     n_iter=("Number of training iterations", "option", "n", int),
 )
-def main(model=None, output_dir=None, n_iter=100):
+def main(model=None, output_dir=None,training_data=None, n_iter=100):
     """Load the model, set up the pipeline and train the entity recognizer."""
     if model is not None:
         nlp = spacy.load(model)  # load existing spaCy model
         print("Loaded model '%s'" % model)
     else:
-        nlp = spacy.blank("en")  # create blank Language class
-        print("Created blank 'en' model")
+        nlp = spacy.blank("sk")  # create blank Language class
+        print("Created blank 'sk' model")
 
     # create the built-in pipeline components and add them to the pipeline
     # nlp.create_pipe works for built-ins that are registered with spaCy
@@ -51,10 +72,15 @@ def main(model=None, output_dir=None, n_iter=100):
     else:
         ner = nlp.get_pipe("ner")
 
+    nlp3 = spacy.blank("sk")
+    TRAIN_DATA =  read_iob(nlp3,training_data)
+    ents = ["LOC","ORG","PER","MISC"]
+    for ent in ents:
+        ner.add_label(ent)
     # add labels
-    for _, annotations in TRAIN_DATA:
-        for ent in annotations.get("entities"):
-            ner.add_label(ent[2])
+    #for _, annotations in TRAIN_DATA:
+    #    for ent in annotations.get("entities"):
+    #        ner.add_label(ent[2])
 
     # get names of other pipes to disable them during training
     pipe_exceptions = ["ner", "trf_wordpiecer", "trf_tok2vec"]
@@ -66,8 +92,8 @@ def main(model=None, output_dir=None, n_iter=100):
 
         # reset and initialize the weights randomly – but only if we're
         # training a new model
-        if model is None:
-            nlp.begin_training()
+        #if model is None:
+        nlp.begin_training()
         for itn in range(n_iter):
             random.shuffle(TRAIN_DATA)
             losses = {}
@@ -82,12 +108,6 @@ def main(model=None, output_dir=None, n_iter=100):
                     losses=losses,
                 )
             print("Losses", losses)
-
-    # test the trained model
-    for text, _ in TRAIN_DATA:
-        doc = nlp(text)
-        print("Entities", [(ent.text, ent.label_) for ent in doc.ents])
-        print("Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in doc])
 
     # save model to output directory
     if output_dir is not None:
