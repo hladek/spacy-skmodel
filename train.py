@@ -23,6 +23,7 @@ from spacy.util import minibatch, compounding
 from spacy.gold import offsets_from_biluo_tags
 from spacy.gold import iob_to_biluo
 from spacy.gold import GoldParse
+from spacy.scorer import Scorer
 
 def read_iob(nlp, filename):
     words = []
@@ -125,10 +126,10 @@ def main(model=None, output_dir=None,training_data=None, n_iter=100):
         # test the saved model
         print("Loading from", output_dir)
         nlp2 = spacy.load(output_dir)
-        scorer = spacy.Scorer()
-        for text, gold in TEST_DATA:
-            doc = nlp2(text)
-            scorer.score(doc,gold)
+        scorer = Scorer()
+        for doc, gold in TEST_DATA:
+            doc2 = nlp2(doc.text)
+            scorer.score(doc2,gold)
         print("Precision: {}".format(scorer.ents_p))
         print("Recall: {}".format(scorer.ents_r))
         print("F-measure: {}".format(scorer.ents_f))
