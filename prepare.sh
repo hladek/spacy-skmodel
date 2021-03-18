@@ -1,3 +1,4 @@
+# conda install spacy=2.3.5
 mkdir -p build
 mkdir -p build/input
 # Prepare Treebank
