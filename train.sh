@@ -13,10 +13,10 @@ rm -rf $TRAINDIR/posparser
 mv $OUTDIR/model-best $TRAINDIR/posparser
 # Train NER
 # -m posparser loads previous model, but does not copy model
-python ./train.py -t ./sources/skner/wikiann-sk.bio -o $TRAINDIR/nerposparser -n 20 -m $TRAINDIR/posparser/
+python ./train.py -t ./sources/skner/wikiann-sk.bio -o $TRAINDIR/ner -n 20 -m $TRAINDIR/posparser/
 # Copy previous models to the new model
-cp -r $TRAINDIR/posparser/tagger $TRAINDIR/nerposparser/
-cp -r $TRAINDIR/posparser/parser $TRAINDIR/nerposparser/
+cp -r $TRAINDIR/posparser $TRAINDIR/nerposparser/
+cp -r $TRAINDIR/ner/ner $TRAINDIR/nerposparser/ner
 # Package model
 spacy package $TRAINDIR/nerposparser dist --meta-path ./meta.json --force
 cd dist/sk_sk1-0.3.0

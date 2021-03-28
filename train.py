@@ -25,6 +25,7 @@ from spacy.gold import iob_to_biluo
 from spacy.gold import GoldParse
 from spacy.scorer import Scorer
 
+invalid_span_tokens = re.compile(r'\s')
 def read_iob(nlp, filename):
     words = []
     ners = []
