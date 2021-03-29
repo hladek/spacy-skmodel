@@ -2,10 +2,10 @@
   "lang":"sk",
   "name": "sk1",
   "version": "0.3.0",
-  "description": "Basic Slovak model trained on public data",
-  "spacy_version":">=2.3.2",
+  "description": "Basic Slovak model without word vectors trained on public data",
   "author":"Daniel Hládek",
-  "e-mail":"dhladek@gmail.com",
+  "email":"dhladek@gmail.com",
+  "url":"https://nlp.kemt.fei.tuke.sk",
   "license":"CC BY-SA 3.0"
 }
 
