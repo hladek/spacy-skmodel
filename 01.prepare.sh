@@ -10,3 +10,6 @@ spacy convert ./sources/ud-artificial-gapping/sk-ud-crawled-orphan.conllu ./d/in
 mkdir -p input/skner
 cd input/skner
 python ../../skner2json.py ../../sources/skner/wikiann-sk.bio
+
+wget https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.sk.300.vec.gz
+mv cc.sk.300.vec.gz ./input
