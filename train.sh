@@ -1,10 +1,10 @@
 FLAGS="--n-iter 10"
-#rm -r out
-#mkdir -p out
+rm -r out
+mkdir -p out
 # Train dependency and POS
-#spacy train sk out/posparser input/slovak-treebank input/ud-artificial-gapping  -p tagger,parser $FLAGS
+spacy train sk out/posparser input/slovak-treebank input/ud-artificial-gapping  -p tagger,parser $FLAGS
 # Train NER
-#spacy train sk out/ner input/skner/train.json input/skner/test.json -p ner  -R $FLAGS
+spacy train sk out/ner input/skner/train.json input/skner/test.json -p ner  -R $FLAGS
 
 ## Assemle model
 mkdir -p out/nerposparser
