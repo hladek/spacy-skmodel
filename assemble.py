@@ -9,10 +9,13 @@ outmeta = sys.argv[4]
 meta = None
 with open(base,"rb") as f:
     meta = json.load(f)
+    meta["labels"] = {}
+    meta["accuracy"] = {}
 
 ner_meta = None
 with open(ner,"rb") as f:
     ner_meta = json.load(f)
+    meta["spacy_version"] = ner_meta["spacy_version"]
     meta["labels"]["ner"] = ner_meta["labels"]["ner"]
     meta["accuracy"]["ents_p"] = ner_meta["accuracy"]["ents_p"]
     meta["accuracy"]["ents_r"] = ner_meta["accuracy"]["ents_r"]
@@ -28,8 +31,8 @@ with open(posparser,"rb") as f:
     meta["accuracy"]["las_per_type"] = posparser_meta["accuracy"]["las_per_type"]
     meta["labels"]["tagger"] = posparser_meta["labels"]["tagger"]
 
-with open(outmeta,"wb") as f:
-    json.dump(f)
+with open(outmeta,"w") as f:
+    json.dump(meta,f,indent=6)
 
 
 
