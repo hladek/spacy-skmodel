@@ -25,6 +25,7 @@ with open(ner,"rb") as f:
 posparser_meta = None
 with open(posparser,"rb") as f:
     posparser_meta = json.load(f)
+    meta["vectors"] = posparser_meta["vectors"]
     meta["accuracy"]["tags_acc"] = posparser_meta["accuracy"]["tags_acc"]
     meta["accuracy"]["uas"] = posparser_meta["accuracy"]["uas"]
     meta["accuracy"]["las"] = posparser_meta["accuracy"]["las"]
