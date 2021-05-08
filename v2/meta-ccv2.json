@@ -6,6 +6,7 @@
   "author":"Daniel Hládek",
   "email":"dhladek@gmail.com",
   "url":"https://nlp.kemt.fei.tuke.sk",
-  "license":"CC BY-SA 3.0"
+  "license":"CC BY-SA 3.0",
+  "pipeline": ["tagger","parser","ner"]
 }
 
