@@ -11,7 +11,7 @@ spacy train sk $OUTDIR/ner input/skner/train.json input/skner/test.json -p ner  
 mkdir -p $OUTDIR/nerposparser
 cp -r $OUTDIR/posparser/model-final/* $OUTDIR/nerposparser
 cp -r $OUTDIR/ner/model-final/ner $OUTDIR/nerposparser
-python ./assemble.py meta-v2.json $OUTDIR/ner/model-final/meta.json $OUTDIR/posparser/model-final/meta.json $OUTDIR/nerposparser/meta.json
+python ./assemble.py v2/meta-v2.json $OUTDIR/ner/model-final/meta.json $OUTDIR/posparser/model-final/meta.json $OUTDIR/nerposparser/meta.json
 
 # Make python package
 mkdir -p $OUTDIR/dist

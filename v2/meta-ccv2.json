@@ -1,7 +1,7 @@
 {
   "lang":"sk",
-  "name": "sk1cc",
-  "version": "0.3.0",
+  "name": "sk_core_web_lg",
+  "version": "2.3.1",
   "description": "Basic Slovak model with fastext word vectors trained on public data",
   "author":"Daniel Hládek",
   "email":"dhladek@gmail.com",

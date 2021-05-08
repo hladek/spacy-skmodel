@@ -1,7 +1,7 @@
 {
   "lang":"sk",
-  "name": "sk1",
-  "version": "0.3.0",
+  "name": "sk_core_web_md",
+  "version": "2.3.1",
   "description": "Basic Slovak model without word vectors trained on public data",
   "author":"Daniel Hládek",
   "email":"dhladek@gmail.com",
