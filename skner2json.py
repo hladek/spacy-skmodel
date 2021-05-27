@@ -97,7 +97,7 @@ def process_data(filename):
         else:
             trainset.append(sentence)
 
-    save_sentences(trainset,"train.json")
-    save_sentences(testset,"test.json")
+    save_sentences(trainset,sys.argv[2])
+    save_sentences(testset,sys.argv[3])
 
 process_data(sys.argv[1])
