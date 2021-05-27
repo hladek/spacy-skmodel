@@ -4,6 +4,25 @@ import json
 #from spacy.gold import offsets_from_biluo_tags
 #from spacy.gold import iob_to_biluo
 
+depmap = {
+"case":"AuxP",
+"root" : "Pred", # / Pred_M
+"punct" : "AuxK",
+"nsubj" : "Sb",
+"obj" : "Obj",
+"conj" : "Sb",
+"cc" : "Coord",
+"orphan" : "Obj",
+"advmod" : "Adv",
+"amod" : "Atr",
+"nmod" : "Atr",
+"mark" : "AuxC",
+"aux" : "AuxV",
+"det" : "Atr",
+"obl" : "Atr",
+"expl:pv" : "AuxT",
+"advmod" : "Adv",
+}
 
 def save_data(filename,dataset):
     sentences = []
@@ -51,6 +70,8 @@ def process_data(trainname,testname):
     dataset = []
     sentence = []
     for l in sys.stdin:
+        if l[0] == "#":
+            continue
         tokens = l.split()
         #print(tokens)
         if len(tokens)  < 2:
@@ -61,15 +82,20 @@ def process_data(trainname,testname):
         head = int(tokens[6])
         id = int(tokens[0]) -1
         print(head,id)
-        h = head - id
+        h = 0
+        if head != 0:
+            h = head - id -1
+        dep = tokens[7]
+        if dep in depmap:
+            dep = depmap[dep]
         #print(h)
         token = {
             "id": id,
             "orth": tokens[1],
-            "tag": tokens[3],
+            "tag": tokens[4],
             # "ner":
             "head": h,
-            "dep": tokens[7],
+            "dep": dep,
         }
         sentence.append(token)
     trainset = []
