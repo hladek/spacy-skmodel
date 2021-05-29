@@ -10,7 +10,10 @@ with open(sys.argv[1]) as f:
     doc["email"] = "daniel.hladek@tuke.sk"
     doc["url"] = "https://nlp.kemt.fei.tuke.sk"
     doc["license"] = "BSD"
+    if "disabled" in doc:
+        del doc["disabled"]
+    doc["pipeline"] = ["tagger","parser","ner"]
 
-#with open(sys.argv[1],"w") as f:
-json.dump(doc,sys.stdout,indent=4)
+with open(sys.argv[1],"w") as f:
+    json.dump(doc,f,indent=4)
 
