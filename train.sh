@@ -8,11 +8,9 @@ spacy train config.cfg -o ./train/posparser -g 1
 rm -r dist
 mkdir -p dist
 mkdir dist/posparser
-spacy package train/posparser/model-final dist/posparser
+spacy package train/posparser/model-best dist/posparser
 pip install --force dist/posparser/sk_pipeline-0.0.0/dist/sk_pipeline-0.0.0.tar.gz
 spacy train config-ner.cfg -o ./train/nerposparser -g 1
 python changemeta.py ./train/nerposparser/model-best
 mkdir dist/nerposparser
 spacy package train/nerposparser/model-best dist/nerposparser
-#cd dist/nerposparser/sk_sk1cc-3.0.0
-#python ./setup.py sdist --dist-dir ../

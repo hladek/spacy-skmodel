@@ -25,7 +25,7 @@ with open(config_name) as f:
         line = l.rstrip()
         if "disabled" in line:
             line = "disabled: []"
-        lines.append(line)
+        clines.append(line)
 
 with open(config_name,"w") as f:
     print("\n".join(clines),file=f)
