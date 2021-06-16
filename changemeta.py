@@ -4,7 +4,7 @@ dname = sys.argv[1]
 meta_name = dname + "/meta.json"
 with open(meta_name) as f:
     doc = json.load(f)
-    doc["name"] = "sk1cc"
+    doc["name"] = "core_web_md"
     doc["version"] = "3.0.0"
     doc["description"] = "Slovak model with word vectors"
     doc["author"] = "Daniel Hládek"
