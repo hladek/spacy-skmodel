@@ -14,3 +14,8 @@ spacy convert input/test.json input
 python skner2json.py ./sources/skner/wikiann-sk.bio  input/train-ner.json input/test-ner.json
 spacy convert input/train-ner.json input
 spacy convert input/test-ner.json input
+
+# Prepare vectors
+mkdir input
+cd input
+wget https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.sk.300.vec.gz
