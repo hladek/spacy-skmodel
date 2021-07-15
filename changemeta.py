@@ -5,8 +5,8 @@ meta_name = dname + "/meta.json"
 with open(meta_name) as f:
     doc = json.load(f)
     doc["name"] = "core_web_md"
-    doc["version"] = "3.0.0"
-    doc["description"] = "Slovak model with word vectors"
+    doc["version"] = "3.1.0"
+    doc["description"] = "Slovak model with word vectors and UD tags"
     doc["author"] = "Daniel Hládek"
     doc["email"] = "daniel.hladek@tuke.sk"
     doc["url"] = "https://nlp.kemt.fei.tuke.sk"
