@@ -1,6 +1,13 @@
 import json
 import sys
-dname = sys.argv[1]
+
+pos_dname = sys.argv[1]
+with open(pos_dname + "/meta.json") as f:
+    pos_meta = json.load(f)
+    pos_performance = pos_meta["performance"]
+
+
+dname = sys.argv[2]
 meta_name = dname + "/meta.json"
 with open(meta_name) as f:
     doc = json.load(f)
@@ -14,6 +21,8 @@ with open(meta_name) as f:
     if "disabled" in doc:
         del doc["disabled"]
     doc["pipeline"] = ["tagger","parser","ner"]
+    for k,v in pos_performance.items():
+        doc["performance"][k] = v
 
 with open(meta_name,"w") as f:
     json.dump(doc,f,indent=4)
@@ -26,6 +35,7 @@ with open(config_name) as f:
         if "disabled" in line:
             line = "disabled: []"
         clines.append(line)
+
 
 with open(config_name,"w") as f:
     print("\n".join(clines),file=f)

@@ -9,8 +9,8 @@ pip install --force dist/posparser/sk_pipeline-0.0.0/dist/sk_pipeline-0.0.0.tar.
 # Train NER, copy POS and dep from old model
 spacy train config-ner.cfg -o ./train/nerposparser -g 1
 # Correct meta
-python changemeta.py ./train/nerposparser/model-best
-## TODO add pos tagger accuracy
+cp ./train/nerposparser/model-best/meta.json ./train/nerposparser/model-best/meta-ner.json
+python changemeta.py ./train/posparser/model-best ./train/nerposparser/model-best
 # Package result
 mkdir dist/nerposparser
 spacy package train/nerposparser/model-best dist/nerposparser
