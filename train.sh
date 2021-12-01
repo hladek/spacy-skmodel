@@ -1,4 +1,5 @@
-spacy train config.cfg -o ./train/posparser -g 1
+set -e # fail on error
+CUDA_VISIBLE_DEVICES=3 spacy train config.cfg -o ./train/posparser
 # Train POS and dependencies
 rm -r dist
 mkdir -p dist
@@ -7,7 +8,7 @@ spacy package train/posparser/model-best dist/posparser
 # install to include pos and dependencies in new model
 pip install --force dist/posparser/sk_pipeline-0.0.0/dist/sk_pipeline-0.0.0.tar.gz
 # Train NER, copy POS and dep from old model
-spacy train config-ner.cfg -o ./train/nerposparser -g 1
+CUDA_VISIBLE_DEVICES=3 spacy train config-ner.cfg -o ./train/nerposparser
 # Correct meta
 cp ./train/nerposparser/model-best/meta.json ./train/nerposparser/model-best/meta-ner.json
 python changemeta.py ./train/posparser/model-best ./train/nerposparser/model-best
