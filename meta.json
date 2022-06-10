@@ -1,0 +1,10 @@
+{
+  "lang":"sk",
+  "name":"dep_web_md",
+  "version":"3.3.0",
+  "description":"Slovak model with part-of-speech and parsing",
+  "author":"Daniel Hládek",
+  "email":"daniel.hladek@tuke.sk",
+  "url":"https://nlp.kemt.fei.tuke.sk",
+  "license":"BSD"
+}

@@ -1,22 +1,30 @@
 set -e # fail on error
+
+make # prepare data
+
 export CUDA_VISIBLE_DEVICES=0
 # cleanup old results
 rm -rf dist
 mkdir -p dist
 mkdir -p train
-mkdir -p train/posparser
-spacy train config.cfg -o ./train/posparser -g 0 > ./train/posparser/train.log 2> ./train/posparser/train.err.log
+mkdir -p train/sposparser
 # Train POS and dependencies
-mkdir dist/posparser
-spacy package train/posparser/model-best dist/posparser
+spacy train config-transformer.cfg -o ./train/sposparser -g 0 > ./train/sposparser/train.log 2> ./train/sposparser/train.err.log
+# Package POS
+spacy package -m meta.json -F train/sposparser/model-best dist
+cd dist/sk_dep_web_md-3.3.0 
+python ./setup.py sdist
 # install to include pos and dependencies in new model
-pip install --force dist/posparser/sk_pipeline-0.0.0/dist/sk_pipeline-0.0.0.tar.gz
-mkdir -p train/nerposparser
+# name must be the same as in meta.json
+pip install dist/sk_dep_web_md-3.3.0.tar.gz
+cd ../../
+mkdir -p train/snerposparser
 # Train NER, copy POS and dep from old model
-spacy train config-ner.cfg -o ./train/nerposparser -g 0 > ./train/nerposparser/train.log 2> ./train/nerposparser/train.err.log
+spacy train config-transformer-ner.cfg -o ./train/snerposparser -g 0 > ./train/snerposparser/train.log 2> ./train/snerposparser/train.err.log
 # Correct meta
-cp ./train/nerposparser/model-best/meta.json ./train/nerposparser/model-best/meta-ner.json
-python changemeta.py ./train/posparser/model-best ./train/nerposparser/model-best
+cp ./train/snerposparser/model-best/meta.json ./train/snerposparser/model-best/meta-ner.json
+python changemeta.py ./train/sposparser/model-best ./train/snerposparser/model-best
 # Package result
-mkdir dist/nerposparser
-spacy package train/nerposparser/model-best dist/nerposparser
+spacy package --version 3.3.0 train/snerposparser/model-best dist
+cd dist/sk_core_web_md-3.3.0 
+python ./setup.py sdist
