@@ -2,6 +2,10 @@
 
 This is unreleased version.
 
+Tagger module uses Slovak National Corpus Tagset.
+Morphological analyzer uses Universal dependencies tagset and is trained on Slovak dependency treebank.
+Lemmatizer is trained on Slovak dependency treebank.
+
 ## Downloads 
 
 - [Spacy 3.0, Dependencies](https://files.kemt.fei.tuke.sk/models/spacy/sk_dep_web_md-3.3.0.tar.gz). Model for trained lemmatization, POS tagging and dependency relations. 
