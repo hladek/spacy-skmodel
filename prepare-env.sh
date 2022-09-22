@@ -1,2 +1,3 @@
-conda install pytorch cudatoolkit=10.1 -c pytorch-lts
-pip install -U spacy[cuda101,transformers,lookups]
+conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
+pip install -U spacy[cuda113,transformers,lookups]==3.4
+rm -r ./input/*
