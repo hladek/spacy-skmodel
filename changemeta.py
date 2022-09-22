@@ -12,15 +12,9 @@ meta_name = dname + "/meta.json"
 with open(meta_name) as f:
     doc = json.load(f)
     doc["name"] = "core_web_md"
-    doc["version"] = "3.1.0"
-    doc["description"] = "Slovak model with word vectors and UD tags"
-    doc["author"] = "Daniel Hládek"
-    doc["email"] = "daniel.hladek@tuke.sk"
-    doc["url"] = "https://nlp.kemt.fei.tuke.sk"
-    doc["license"] = "BSD"
     if "disabled" in doc:
         del doc["disabled"]
-    doc["pipeline"] = ["tagger","parser","ner"]
+    doc["pipeline"] = ["transformer","tagger","morphologizer","trainable_lemmatizer","parser","ner"]
     for k,v in pos_performance.items():
         doc["performance"][k] = v
 
