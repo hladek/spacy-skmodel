@@ -16,12 +16,12 @@ This is Slovak Spacy model.
 
 # Version 3.4
 
-- [Spacy 3.4, Dependencies](https://files.kemt.fei.tuke.sk/models/spacy/sk_dep_web_md-3.4.0.tar.gz). 
+- [Spacy 3.4, Dependencies](https://files.kemt.fei.tuke.sk/models/spacy/sk_dep_web_md-3.4.1.tar.gz). 
     - Model for trained lemmatization, POS tagging and dependency relations. 
     - Contains Floret Word Vectors, trained on our web corpus.
     - Should be without license issues.
 
-- [Spacy 3.0, NER + Dependencies](https://files.kemt.fei.tuke.sk/models/spacy/sk_core_web_md-3.4.0.tar.gz). 
+- [Spacy 3.4, NER + Dependencies](https://files.kemt.fei.tuke.sk/models/spacy/sk_core_web_md-3.4.1.tar.gz). 
     - Includes the dependencies model.
     - This model uses separate fine-tuned model for NER recognition. 
 
